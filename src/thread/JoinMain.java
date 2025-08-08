@@ -1,3 +1,5 @@
+package thread;
+
 public class JoinMain {
 
     public static void main(String[] args) throws InterruptedException {
@@ -13,8 +15,8 @@ public class JoinMain {
 
         System.out.println("main 스레드 wait 상태 시작");
         // 만약 join 메서드에 time 파라미터를 넣어주지 않으면 main 스레드는무기한 wait 상태가 됨
-        thread1.join(2000); // main 스레드에서 thread1이 종료될 때까지 최대 2초간 기다림
-        thread2.join(2000); // main 스레드에서 thread2이 종료될 때까지 최대 2초간 기다림
+        thread1.join(2000); // main 스레드에서 thread1이 종료될 때까지 최대 2초간 이 라인에서 기다림
+        thread2.join(2000); // main 스레드에서 thread2이 종료될 때까지 최대 2초간 이 라인에서 기다림
         System.out.println("main 스레드 wait 상태 종료");
 
         System.out.println("thread-1 : " + sumJob1.result);
