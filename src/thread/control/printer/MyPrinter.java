@@ -16,6 +16,7 @@ public class MyPrinter {
             System.out.println("프린터할 문서를 입력하세요. 종료 (q): ");
             String input = scanner.nextLine();
             if (input.equals("q")) {
+                printerThread.interrupt();
                 break;
             }
             printer.addJob(input);
