@@ -1,4 +1,4 @@
-package thread.control.printer;
+package thread;
 
 import java.util.Queue;
 import java.util.Scanner;
@@ -31,6 +31,7 @@ public class MyPrinter {
 
             while (!Thread.interrupted()) {
                 if (jobQueue.isEmpty()) {
+                    Thread.yield(); // jobQueue 가 비어있으면 다른 스레드에게 CPU 점유 양보
                     continue;
                 }
 
