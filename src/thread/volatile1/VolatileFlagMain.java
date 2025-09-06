@@ -22,8 +22,14 @@ public class VolatileFlagMain {
     }
 
     static class MyTask implements Runnable {
-        boolean runFlag = true;
-        //volatile boolean runFlag = true;
+
+        /*
+            메모리 가시성 문제 해결을 위해
+            아래 공유 변수에 대해서는 캐시메모리를 사용하지 않고
+            항상 메인메모리에서만 사용함으로써 스레드들 간의 Sync 를 맞춤
+        */
+        volatile boolean runFlag = true;
+
         @Override
         public void run() {
             System.out.println("task 시작");
