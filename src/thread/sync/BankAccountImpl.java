@@ -9,7 +9,7 @@ public class BankAccountImpl implements BankAccount{
     }
 
     @Override
-    public boolean withdraw(int amount) {
+    public synchronized boolean withdraw(int amount) {
         System.out.println("거래 시작: " + getClass().getSimpleName());
         System.out.println("[검증 시작] 출금액: " + amount + ", 잔액: " + balance);
         if (balance < amount) {
@@ -31,7 +31,7 @@ public class BankAccountImpl implements BankAccount{
     }
 
     @Override
-    public int getBalance() {
+    public synchronized int getBalance() {
         return this.balance;
     }
 }
