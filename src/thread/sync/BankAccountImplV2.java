@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BankAccountImplV2 implements BankAccount{
 
     private int balance;
-    private final Lock nonFairLock = new ReentrantLock(); // 비공정 모드 락
+    private final Lock lock = new ReentrantLock(); // 비공정 모드 락
     // private final Lock fairLock = new ReentrantLock(1000); // 공정 모드 락
 
     public BankAccountImplV2(int initialBalance) {
@@ -17,7 +17,11 @@ public class BankAccountImplV2 implements BankAccount{
     public boolean withdraw(int amount) {
         System.out.println("거래 시작: " + getClass().getSimpleName());
 
-        nonFairLock.lock();
+        if (!lock.tryLock()) { // 락 획득을 시도하고, 즉시 성공 여부를 반환
+            System.out.println("[진입 실패] 이미 처리중인 작업이 있습니다.");
+            return false;
+        }
+
         try {
             System.out.println("[검증 시작] 출금액: " + amount + ", 잔액: " + balance);
             if (balance < amount) {
@@ -34,7 +38,7 @@ public class BankAccountImplV2 implements BankAccount{
             }
         } finally {
             // lock 을 했으면 이후에 반드시 unlock 을 해줘야 됨.
-            nonFairLock.unlock();
+            lock.unlock();
         }
         System.out.println("거래 종료");
         return true;
@@ -42,12 +46,12 @@ public class BankAccountImplV2 implements BankAccount{
 
     @Override
     public int getBalance() {
-        nonFairLock.lock();
+        lock.lock();
         try {
             return this.balance;
         } finally {
             // lock 을 했으면 이후에 반드시 unlock 을 해줘야 됨.
-            nonFairLock.unlock();
+            lock.unlock();
         }
     }
 }
