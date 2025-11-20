@@ -5,7 +5,8 @@ import static java.lang.Thread.sleep;
 public class BankMain {
 
     public static void main(String[] args) throws InterruptedException {
-        BankAccount account = new BankAccountImpl(1000);
+//        BankAccount account = new BankAccountImpl(1000);
+        BankAccount account = new BankAccountImplV2(1000);
         Thread thread1 = new Thread(new WithdrawTask(account, 800), "thread1");
         Thread thread2 = new Thread(new WithdrawTask(account, 800), "thread2");
 

@@ -1,23 +1,24 @@
 package thread.sync;
 
-public class BankAccountImpl implements BankAccount{
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class BankAccountImplV2 implements BankAccount{
 
     private int balance;
+    private final Lock nonFairLock = new ReentrantLock(); // 비공정 모드 락
+    // private final Lock fairLock = new ReentrantLock(1000); // 공정 모드 락
 
-    public BankAccountImpl(int initialBalance) {
+    public BankAccountImplV2(int initialBalance) {
         this.balance = initialBalance;
     }
 
     @Override
-//    public synchronized boolean withdraw(int amount) {
     public boolean withdraw(int amount) {
         System.out.println("거래 시작: " + getClass().getSimpleName());
 
-        /**
-         * 메서드 전체에 synchronized 를 적용하는 것 보다는
-         * 꼭 필요한 구간에만 적용하는게 성능적으로 더 이득.
-         */
-        synchronized (this) {
+        nonFairLock.lock();
+        try {
             System.out.println("[검증 시작] 출금액: " + amount + ", 잔액: " + balance);
             if (balance < amount) {
                 System.out.println("[검증 실패] 출금액: " + amount + ", 잔액: " + balance);
@@ -31,13 +32,22 @@ public class BankAccountImpl implements BankAccount{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+        } finally {
+            // lock 을 했으면 이후에 반드시 unlock 을 해줘야 됨.
+            nonFairLock.unlock();
         }
         System.out.println("거래 종료");
         return true;
     }
 
     @Override
-    public synchronized int getBalance() {
-        return this.balance;
+    public int getBalance() {
+        nonFairLock.lock();
+        try {
+            return this.balance;
+        } finally {
+            // lock 을 했으면 이후에 반드시 unlock 을 해줘야 됨.
+            nonFairLock.unlock();
+        }
     }
 }
