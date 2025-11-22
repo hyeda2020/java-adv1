@@ -7,7 +7,7 @@ public class BankAccountImplV2 implements BankAccount{
 
     private int balance;
     private final Lock lock = new ReentrantLock(); // 비공정 모드 락
-    // private final Lock fairLock = new ReentrantLock(1000); // 공정 모드 락
+//     private final Lock fairLock = new ReentrantLock(true); // 공정 모드 락
 
     public BankAccountImplV2(int initialBalance) {
         this.balance = initialBalance;
