@@ -1,6 +1,8 @@
 package thread.volatile1;
 
-import static java.lang.Thread.sleep;
+import utils.ThreadUtils;
+
+import static utils.ThreadUtils.*;
 
 public class VolatileCountMain {
 

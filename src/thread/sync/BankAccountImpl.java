@@ -1,5 +1,9 @@
 package thread.sync;
 
+import utils.ThreadUtils;
+
+import static utils.ThreadUtils.*;
+
 public class BankAccountImpl implements BankAccount{
 
     private int balance;
@@ -26,11 +30,7 @@ public class BankAccountImpl implements BankAccount{
             System.out.println("[검증 완료] 출금액: " + amount + ", 잔액: " + balance);
             balance = balance - amount;
             System.out.println("[출금 완료] 출금액: " + amount + ", 변경 잔액: " + balance);
-            try {
-                Thread.sleep(1000); // 출금에 걸리는 시간으로 가정
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            sleep(1000); // 출금에 걸리는 시간으로 가정
         }
         System.out.println("거래 종료");
         return true;

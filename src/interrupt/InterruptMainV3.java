@@ -1,5 +1,9 @@
 package interrupt;
 
+import utils.ThreadUtils;
+
+import static utils.ThreadUtils.*;
+
 public class InterruptMainV3 {
 
     public static void main(String[] args) {
@@ -9,16 +13,12 @@ public class InterruptMainV3 {
         thread.start();
         System.out.println("작업 시작");
 
-        try {
-            Thread.sleep(50);
-            System.out.println("작업 중단 지시 thread.interrupt()");
+        sleep(50);
+        System.out.println("작업 중단 지시 thread.interrupt()");
 
-            // 해당 스레드가 InterruptedException 을 던지는 코드를 수행하는 중이라면 바로 해당 상태(WAIT, TIMED-WAIT) 중지
-            thread.interrupt();
-            System.out.println("state = " + thread.getState());
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        // 해당 스레드가 InterruptedException 을 던지는 코드를 수행하는 중이라면 바로 해당 상태(WAIT, TIMED-WAIT) 중지
+        thread.interrupt();
+        System.out.println("state = " + thread.getState());
     }
 
     static class MyTask implements Runnable {
