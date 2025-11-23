@@ -15,6 +15,9 @@ public class BoundedQueueImpl implements BoundedQueue{
     @Override
     public synchronized void put(String data) {
         if (queue.size() == max) {
+            /**
+             * 소비자가 데이터를 늦게 소비한다면 버려지는 데이터 발생
+             */
             System.out.println("[put] 큐가 가득 참, 버림: " + data);
             return;
         }
@@ -30,7 +33,7 @@ public class BoundedQueueImpl implements BoundedQueue{
     }
 
     @Override
-//    public synchronized String toString() { // 해당 예제에서는 synchronized 사용하지 않음.
+//    public synchronized String toString() { // 원칙적으로는 synchronized 를 사용해야 하지만, 해당 예제에서는 사용하지 않음.
     public String toString() {
         return queue.toString();
     }
