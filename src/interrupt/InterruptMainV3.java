@@ -1,7 +1,5 @@
 package interrupt;
 
-import utils.ThreadUtils;
-
 import static utils.ThreadUtils.*;
 
 public class InterruptMainV3 {

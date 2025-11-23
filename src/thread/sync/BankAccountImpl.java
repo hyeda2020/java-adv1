@@ -1,7 +1,5 @@
 package thread.sync;
 
-import utils.ThreadUtils;
-
 import static utils.ThreadUtils.*;
 
 public class BankAccountImpl implements BankAccount{

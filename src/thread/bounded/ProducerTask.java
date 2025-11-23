@@ -2,8 +2,8 @@ package thread.bounded;
 
 public class ProducerTask implements Runnable{
 
-    private BoundedQueue queue;
-    private String request;
+    private final BoundedQueue queue;
+    private final String request;
 
     public ProducerTask(BoundedQueue queue, String request) {
         this.queue = queue;

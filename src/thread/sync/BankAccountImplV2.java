@@ -1,7 +1,5 @@
 package thread.sync;
 
-import utils.ThreadUtils;
-
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 

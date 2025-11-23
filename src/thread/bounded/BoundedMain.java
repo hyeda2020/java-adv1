@@ -1,7 +1,5 @@
 package thread.bounded;
 
-import utils.ThreadUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 

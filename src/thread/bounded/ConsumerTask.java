@@ -2,7 +2,7 @@ package thread.bounded;
 
 public class ConsumerTask implements Runnable{
 
-    private BoundedQueue queue;
+    private final BoundedQueue queue;
 
     public ConsumerTask(BoundedQueue queue) {
         this.queue = queue;

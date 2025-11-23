@@ -1,7 +1,5 @@
 package thread.volatile1;
 
-import utils.ThreadUtils;
-
 import static utils.ThreadUtils.*;
 
 public class VolatileFlagMain {
