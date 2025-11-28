@@ -11,7 +11,8 @@ public class BoundedMain {
         // 1. BoundedQueue 선택
 //        BoundedQueue queue = new BoundedQueueImpl(2);
 //        BoundedQueue queue = new BoundedQueueImplV2(2);
-        BoundedQueue queue = new BoundedQueueImplV3(2);
+//        BoundedQueue queue = new BoundedQueueImplV3(2);
+        BoundedQueue queue = new BoundedQueueImplV4(2);
 
         // 2. 생산자, 소비자 실행 순서 선택(택 1)
         producerFirst(queue);
