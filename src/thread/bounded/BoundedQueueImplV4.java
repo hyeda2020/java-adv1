@@ -9,7 +9,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class BoundedQueueImplV4 implements BoundedQueue{
 
     private final Lock lock = new ReentrantLock();
-    private final Condition condition = lock.newCondition();
+    // 생산자/소비자 전용 대기 공간 분리
+    private final Condition producerCond = lock.newCondition();
+    private final Condition consumerCond = lock.newCondition();
 
     private final Queue<String> queue = new ArrayDeque<>();
     private final int max;
@@ -26,15 +28,15 @@ public class BoundedQueueImplV4 implements BoundedQueue{
             while (queue.size() == max) {
                 System.out.println("[put] 큐가 가득 참, 기다림");
                 try {
-                    condition.await(); // 지정한 condition 에 현재 스레드를 대기(WAITING) 상태로 보관
+                    producerCond.await(); // 지정한 condition 에 현재 스레드를 대기(WAITING) 상태로 보관
                     System.out.println("[put] 생산자 다시 깨어남");
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
             queue.offer(data);
-            System.out.println("[put] 생산자 데이터 저장, notify() 호출");
-            condition.signal(); // 지정한 condition 에서 대기중인 임의의 스레드 하나를 깨움
+            System.out.println("[put] 생산자 데이터 저장, producerCond.signal() 호출");
+            producerCond.signal(); // 지정한 condition 에서 대기중인 임의의 스레드 하나를 깨움
         } finally {
             lock.unlock();
         }
@@ -48,15 +50,15 @@ public class BoundedQueueImplV4 implements BoundedQueue{
             while (queue.isEmpty()) {
                 System.out.println("[take] 큐에 데이터가 없음, 소비자 대기");
                 try {
-                    condition.await();
+                    consumerCond.await();
                     System.out.println("[take] 소비자 다시 깨어남");
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
             String data = queue.poll();
-            System.out.println("[take] 소비자 데이터 획득, notify() 호출");
-            condition.signal();
+            System.out.println("[take] 소비자 데이터 획득, consumerCond.signal() 호출");
+            consumerCond.signal();
             return data;
         } finally {
             lock.unlock();
