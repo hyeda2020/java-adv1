@@ -2,6 +2,8 @@ package thread.bounded;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import static utils.ThreadUtils.*;
 
@@ -12,7 +14,11 @@ public class BoundedMain {
 //        BoundedQueue queue = new BoundedQueueImpl(2);
 //        BoundedQueue queue = new BoundedQueueImplV2(2);
 //        BoundedQueue queue = new BoundedQueueImplV3(2);
-        BoundedQueue queue = new BoundedQueueImplV4(2);
+//        BoundedQueue queue = new BoundedQueueImplV4(2);
+        BoundedQueue queue = new BoundedQueueImplV5(2);
+
+        // 실무에서는 바로 아래처럼 BlockingQueue 인터페이스를 사용해도 됨.
+        // BlockingQueue<String> queue = new ArrayBlockingQueue<>(2);
 
         // 2. 생산자, 소비자 실행 순서 선택(택 1)
         producerFirst(queue);
