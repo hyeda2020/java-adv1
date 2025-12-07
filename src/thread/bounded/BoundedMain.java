@@ -56,8 +56,7 @@ public class BoundedMain {
         }
     }
 
-    private static void startConsumer(BoundedQueue queue, List<Thread>
-            threads) {
+    private static void startConsumer(BoundedQueue queue, List<Thread> threads) {
         System.out.println();
         System.out.println("소비자 시작");
         for (int i = 1; i <= 3; i++) {
