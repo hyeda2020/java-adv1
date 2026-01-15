@@ -10,6 +10,12 @@ import static utils.ThreadUtils.sleep;
 public class PoolSizeMainV1 {
     public static void main(String[] args) throws InterruptedException {
         BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<>(2);
+        /**
+         * 1. 작업을 요청하면 corePoolSize 만큼 스레드를 생성.
+         * 2. core 사이즈를 초과하면 큐에 작업을 넣음.
+         * 3. 큐를 초과하면 maximumPoolSize 만큼 임시로 사용되는 초과 스레드 생성.(keepAliveTime 까지 작업이 없다면 임시 초과 스레드는 제거됨.)
+         * 4. max 사이즈를 초과하면 예외를 발생시켜서 요청 거절.
+         */
         ExecutorService es = new ThreadPoolExecutor(2, 4, 3000,
                 TimeUnit.MILLISECONDS, workQueue);
         printState(es);
